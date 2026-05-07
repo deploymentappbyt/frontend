@@ -20,8 +20,8 @@ import { IoTrophy, IoSparkles } from 'react-icons/io5';
 import VuiBox from 'components/VuiBox';
 import VuiTypography from 'components/VuiTypography';
 import VuiButton from 'components/VuiButton';
-import { tournamentService, CreateTournamentData } from '../../services/tournament.service';
-import challengeService, { Challenge } from '../../services/challenge.service';
+import { tournamentService, CreateTournamentData } from '../../services/tournament.service.js';
+import challengeService, { Challenge } from '../../services/challenge.service.js';
 import { useNavigate } from 'react-router-dom';
 
 interface InlineTournamentCreatorProps {

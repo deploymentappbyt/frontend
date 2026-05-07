@@ -8,7 +8,7 @@ import VuiBox from 'components/VuiBox';
 import VuiTypography from 'components/VuiTypography';
 import VuiButton from 'components/VuiButton';
 import { useVisionUIController } from 'context';
-import tournamentService, { Tournament } from '../../services/tournament.service';
+import tournamentService, { Tournament } from '../../services/tournament.service.js';
 import TournamentSizeSelector from 'components/TournamentSizeSelector';
 import QuickTournamentCreator from 'components/QuickTournamentCreator';
 const TournamentManagement: React.FC = () => {

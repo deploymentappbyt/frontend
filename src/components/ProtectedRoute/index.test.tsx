@@ -4,7 +4,7 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../../store/slices/userSlice';
+import userReducer from '../../store/slices/userSlice.js';
 
 vi.mock('../../services/auth.service.js', () => ({
   authService: {
@@ -13,7 +13,7 @@ vi.mock('../../services/auth.service.js', () => ({
   },
 }));
 
-import ProtectedRoute from './index.tsx';
+import ProtectedRoute from './index.js';
 import { authService } from '../../services/auth.service.js';
 
 describe('ProtectedRoute', () => {

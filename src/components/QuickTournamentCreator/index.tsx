@@ -7,7 +7,7 @@ import { IoClose, IoTrophy, IoCalendar, IoTime, IoGift } from 'react-icons/io5';
 import VuiBox from 'components/VuiBox';
 import VuiTypography from 'components/VuiTypography';
 import VuiButton from 'components/VuiButton';
-import { tournamentService, CreateTournamentData } from '../../services/tournament.service';
+import { tournamentService, CreateTournamentData } from '../../services/tournament.service.js';
 interface QuickTournamentCreatorProps {
   open: boolean;
   onClose: () => void;

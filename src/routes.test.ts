@@ -20,7 +20,7 @@ vi.mock('layouts/authentication/oauth-callback', () => ({ default: () => null })
 vi.mock('layouts/clans', () => ({ default: () => null }));
 vi.mock('layouts/admin-clans', () => ({ default: () => null }));
 
-import routes from './routes.jsx';
+import routes from './routes.js';
 
 describe('routes configuration', () => {
   it('should export routes as an array', () => {
