@@ -54,7 +54,7 @@ import "./assets/css/accessibility.css";
 // RTL plugins
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
+import { createCache } from "@emotion/cache";
 
 // Vision UI Dashboard React routes
 import routes from "./routes.jsx";
@@ -399,7 +399,7 @@ export default function App() {
     
     // Initialize socket connection
     const token = localStorage.getItem('accessToken');
-    chatService.initializeSocket(token);
+    chatService.initializeSocket(token || undefined);
     
     // Request online users after connection
     setTimeout(() => {
