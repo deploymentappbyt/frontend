@@ -80,9 +80,9 @@
 		"dev": "vite",
 		"start": "vite",
 		"build": "vite build",
+		"preview": "vite preview --host 0.0.0.0 --port $PORT",
 		"test": "vitest run --coverage",
 		"test:watch": "vitest",
-		"preview": "vite preview",
 		"lint": "eslint src",
 		"install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run dev"
 	},
