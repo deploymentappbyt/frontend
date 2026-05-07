@@ -70,3 +70,4 @@ vite.config.ts.timestamp-*
 
 # Misc
 .turbo
+node_modules/
