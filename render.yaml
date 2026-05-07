@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: bytebattle-frontend
+    env: node
+    buildCommand: chmod +x build.sh && ./build.sh
+    startCommand: npm run preview
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: NPM_CONFIG_PRODUCTION
+        value: false
+      - key: NPM_CONFIG_FUND
+        value: false
+      - key: NPM_CONFIG_AUDIT
+        value: false
