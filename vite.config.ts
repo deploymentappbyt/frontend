@@ -56,5 +56,16 @@ export default defineConfig({
   build: {
     outDir: 'build',
     sourcemap: true
+  },
+  preview: {
+    port: 4173,
+    strictPort: false,
+    // Enable SPA fallback for preview mode
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      }
+    }
   }
 })
