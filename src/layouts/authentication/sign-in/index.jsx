@@ -133,6 +133,10 @@ function SignIn() {
       setError('OAuth login (Google/GitHub) is not supported when 2FA is enabled. Please use email/password login or disable 2FA in your profile settings.');
     } else if (errorParam === 'admin_oauth_blocked') {
       setError('Admin accounts cannot log in with Google or GitHub. Please use your email and password.');
+    } else if (errorParam === 'account_banned') {
+      setError('Your account has been banned. Please contact support for assistance.');
+    } else if (errorParam === 'oauth_failed') {
+      setError('OAuth login failed. Please try again or use email/password login.');
     }
     if (errorParam) {
       window.history.replaceState({}, '', '/authentication/sign-in');

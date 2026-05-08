@@ -13,6 +13,8 @@ function OAuthCallback() {
     const refreshToken = searchParams.get("refreshToken");
 
     if (accessToken && refreshToken) {
+      console.log("✅ OAuth tokens received, storing and fetching user profile...");
+      
       // Store tokens
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
@@ -27,6 +29,7 @@ function OAuthCallback() {
       })
         .then((res) => res.json())
         .then((jwtData) => {
+          console.log("✅ JWT data received:", jwtData);
           // Now fetch the full user data from the users endpoint
           const userId = jwtData.userId || jwtData.sub;
           return fetch(`${API_URL}/users/${userId}`, {
@@ -38,22 +41,17 @@ function OAuthCallback() {
         })
         .then((res) => res.json())
         .then((fullUserData) => {
-          // Block admin users from logging in via OAuth
-          if (fullUserData.role === "admin") {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("user");
-            navigate("/authentication/sign-in?error=admin_oauth_blocked");
-            return;
-          }
+          console.log("✅ Full user data received:", fullUserData);
           localStorage.setItem("user", JSON.stringify(fullUserData));
+          console.log("✅ Redirecting to dashboard...");
           navigate("/dashboard");
         })
         .catch((err) => {
-          console.error("Failed to fetch user profile:", err);
-          navigate("/authentication/sign-in");
+          console.error("❌ Failed to fetch user profile:", err);
+          navigate("/authentication/sign-in?error=oauth_failed");
         });
     } else {
+      console.log("⚠️ No OAuth tokens found in URL, redirecting to sign in");
       // No tokens, redirect to sign in
       navigate("/authentication/sign-in");
     }
