@@ -3,7 +3,7 @@ services:
     name: bytebattle-frontend
     env: node
     buildCommand: chmod +x build.sh && ./build.sh
-    startCommand: npm run preview
+    startCommand: npm start
     envVars:
       - key: NODE_VERSION
         value: 20

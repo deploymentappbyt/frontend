@@ -67,5 +67,7 @@ export default defineConfig({
         changeOrigin: true,
       }
     }
-  }
+  },
+  // Explicitly set publicDir to ensure _redirects is copied
+  publicDir: 'public'
 })
