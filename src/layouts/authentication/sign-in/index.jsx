@@ -375,11 +375,11 @@ function SignIn() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "/api/auth/google";
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/google`;
   };
 
   const handleGithubLogin = () => {
-    window.location.href = "/api/auth/github";
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/github`;
   };
 
   return (
