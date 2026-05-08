@@ -1,6 +1,7 @@
 // ByteBattle Routes Configuration
 
 // ByteBattle layouts
+import Landing from "layouts/landing";
 import Dashboard from "layouts/dashboard";
 import AdminDashboard from "layouts/admin-dashboard";
 import AdminUsers from "layouts/admin-users";
@@ -26,6 +27,13 @@ import { IoHome, IoCodeSlash, IoTrophy, IoGameController, IoPerson, IoRocketShar
 import { IoIosDocument } from "react-icons/io";
 
 const routes = [
+  {
+    name: "Landing",
+    key: "landing",
+    route: "/",
+    component: Landing,
+    noCollapse: true,
+  },
   {
     type: "collapse",
     name: "Dashboard",
