@@ -4,13 +4,13 @@ import axios from 'axios';
 
 class BattleService {
   private socket: Socket | null = null;
-  private battleServiceUrl = 'http://localhost:3010'; // Direct connection to battle service for WebSocket
+  private battleServiceUrl = import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'; // Connect through API Gateway
   private currentUserId: string | null = null;
   private currentUsername: string | null = null;
   private joinRoomInFlight = new Map<string, Promise<any>>();
   private joinPrivateInFlight = new Set<string>();
 
-  // Initialize socket connection to Battle Service (direct connection, not through gateway)
+  // Initialize socket connection to Battle Service (through API Gateway)
   initializeSocket(token?: string): Socket {
     if (this.socket) {
       if (!this.socket.connected) {

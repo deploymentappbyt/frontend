@@ -140,11 +140,11 @@ function SignUp() {
   // ============================================================================
 
   const handleGoogleSignUp = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/google`;
   };
 
   const handleGithubSignUp = () => {
-    window.location.href = "http://localhost:3000/auth/github";
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/github`;
   };
 
   return (

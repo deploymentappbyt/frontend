@@ -1,7 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 import api from './api.js';
 
-const CHAT_SOCKET_URL = import.meta.env.VITE_CHAT_SOCKET_URL || 'http://localhost:3000';
+const CHAT_SOCKET_URL = import.meta.env.VITE_CHAT_SOCKET_URL || 'https://api-gateway-j03l.onrender.com';
 
 class ChatService {
   private socket: Socket | null = null;
