@@ -5,6 +5,7 @@ import { IoCodeSlash, IoTrophy, IoFlash, IoPeople, IoShield, IoRocket } from "re
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
+import PageLayout from "examples/LayoutContainers/PageLayout";
 import { authService } from "services/auth.service";
 
 function Landing() {
@@ -51,12 +52,13 @@ function Landing() {
   ];
 
   return (
-    <VuiBox
-      sx={{
-        minHeight: "100vh",
-        background: "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)",
-        position: "relative",
-        overflow: "hidden",
+    <PageLayout>
+      <VuiBox
+        sx={{
+          minHeight: "100vh",
+          background: "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)",
+          position: "relative",
+          overflow: "hidden",
       }}
     >
       {/* Animated background particles */}
@@ -470,6 +472,7 @@ function Landing() {
         </VuiTypography>
       </VuiBox>
     </VuiBox>
+    </PageLayout>
   );
 }
 
