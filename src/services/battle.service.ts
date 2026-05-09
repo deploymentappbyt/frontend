@@ -20,11 +20,20 @@ class BattleService {
       return this.socket;
     }
 
+    // Get userId from localStorage to send during connection
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const userId = user._id || user.id || null;
+
     console.log('Initializing battle socket connection to:', `${this.battleServiceUrl}/battle`);
+    console.log('  - User ID:', userId);
 
     const socket = io(`${this.battleServiceUrl}/battle`, {
       auth: {
         token: token || localStorage.getItem('accessToken'),
+        userId: userId, // Send userId during connection
+      },
+      query: {
+        userId: userId, // Also send in query as fallback
       },
       transports: ['websocket', 'polling'],
       reconnection: true,
@@ -37,7 +46,8 @@ class BattleService {
 
     socket.on('connect', () => {
       console.log('✅ Battle socket connected:', socket.id);
-      console.log('Socket transport:', socket.io.engine.transport.name);
+      console.log('  - Socket transport:', socket.io.engine.transport.name);
+      console.log('  - User ID sent:', userId);
     });
 
     socket.on('disconnect', (reason) => {
@@ -59,6 +69,7 @@ class BattleService {
 
     socket.on('reconnect', (attemptNumber) => {
       console.log(`✅ Reconnected after ${attemptNumber} attempts`);
+      console.log('  - User ID:', userId);
     });
 
     return socket;
