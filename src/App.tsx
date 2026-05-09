@@ -566,6 +566,15 @@ export default function App() {
               },
             },
           },
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                "&.MuiTypography-button": {
+                  color: "#1a202c",
+                },
+              },
+            },
+          },
         },
       });
       // Attach alpha utility to theme for MUI X components compatibility
@@ -642,6 +651,15 @@ export default function App() {
               },
             },
           },
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                "&.MuiTypography-button": {
+                  color: "#1a202c",
+                },
+              },
+            },
+          },
         },
       });
       // Attach alpha utility to theme for MUI X components compatibility
@@ -671,6 +689,15 @@ export default function App() {
               },
             },
           },
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                "&.MuiTypography-button": {
+                  color: "#ffffff",
+                },
+              },
+            },
+          },
         },
       });
       // Attach alpha utility to theme for MUI X components
@@ -697,6 +724,15 @@ export default function App() {
               },
               html: {
                 backgroundColor: "#0a0e23",
+              },
+            },
+          },
+          MuiTypography: {
+            styleOverrides: {
+              root: {
+                "&.MuiTypography-button": {
+                  color: "#ffffff",
+                },
               },
             },
           },
