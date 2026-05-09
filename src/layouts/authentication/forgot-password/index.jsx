@@ -13,7 +13,8 @@ import { useVisionUIController, setDarkMode } from "context/index.jsx";
 
 function ForgotPassword() {
   const navigate = useNavigate();
-  const [controller, dispatchVisionUI] = useVisionUIController();
+  const [controller] = useVisionUIController();
+  const { darkMode } = controller;
   
   // Step management
   const [step, setStep] = useState(1); // 1: Email, 2: Reset Code, 3: Success
@@ -29,18 +30,6 @@ function ForgotPassword() {
   const [error, setError] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  // Force light mode on forgot-password page
-  useEffect(() => {
-    setDarkMode(dispatchVisionUI, false);
-    
-    return () => {
-      const storedDarkMode = localStorage.getItem("bb-dark-mode");
-      if (storedDarkMode === "true") {
-        setDarkMode(dispatchVisionUI, true);
-      }
-    };
-  }, [dispatchVisionUI]);
 
   // Password validation
   const validatePassword = (password) => {
@@ -121,7 +110,9 @@ function ForgotPassword() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+          background: darkMode 
+            ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
         }}
       >
         <VuiBox sx={{ maxWidth: "450px", width: "100%", px: 3 }}>
@@ -129,16 +120,16 @@ function ForgotPassword() {
             <VuiBox
               p={4}
               sx={{
-                background: "#ffffff",
+                background: darkMode ? "rgb(19, 21, 54)" : "#ffffff",
                 borderRadius: "20px",
                 textAlign: "center",
               }}
             >
               <IoCheckmarkCircle size={80} color="#0075FF" />
-              <VuiTypography variant="h1" fontWeight="bold" mt={2} mb={1} sx={{ fontSize: "1.875rem", color: "#1a202c" }}>
+              <VuiTypography variant="h1" fontWeight="bold" mt={2} mb={1} sx={{ fontSize: "1.875rem", color: darkMode ? "white" : "#1a202c" }}>
                 Password Reset!
               </VuiTypography>
-              <VuiTypography variant="body2" mb={3} sx={{ color: "#4a5568" }}>
+              <VuiTypography variant="body2" mb={3} sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}>
                 Your password has been successfully reset.
                 <br />
                 Redirecting to sign in...
@@ -161,15 +152,17 @@ function ForgotPassword() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+          background: darkMode 
+            ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
         }}
       >
         <VuiBox sx={{ maxWidth: "450px", width: "100%", px: 3 }}>
           <VuiBox mb={3}>
-            <VuiTypography variant="h1" fontWeight="bold" textAlign="center" sx={{ fontSize: "1.875rem", color: "#1a202c" }}>
+            <VuiTypography variant="h1" fontWeight="bold" textAlign="center" sx={{ fontSize: "1.875rem", color: darkMode ? "white" : "#1a202c" }}>
               Reset Password 🔑
             </VuiTypography>
-            <VuiTypography variant="body2" textAlign="center" mt={1} sx={{ color: "#4a5568" }}>
+            <VuiTypography variant="body2" textAlign="center" mt={1} sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}>
               Enter the code sent to <strong>{email}</strong>
             </VuiTypography>
           </VuiBox>
@@ -181,7 +174,7 @@ function ForgotPassword() {
               noValidate
               p={3}
               sx={{
-                background: "#ffffff",
+                background: darkMode ? "rgb(19, 21, 54)" : "#ffffff",
                 borderRadius: "20px",
               }}
             >
@@ -203,7 +196,7 @@ function ForgotPassword() {
 
               <VuiBox mb={2}>
                 <VuiBox mb={1} ml={0.5}>
-                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: "#1a202c" }}>
+                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: darkMode ? "white" : "#1a202c" }}>
                     Reset Code
                   </VuiTypography>
                 </VuiBox>
@@ -221,7 +214,7 @@ function ForgotPassword() {
                     inputProps={{ required: false }}
                     maxLength={6}
                     sx={{ 
-                      background: "#ffffff", 
+                      background: darkMode ? "rgb(19, 21, 54)" : "#ffffff", 
                       textAlign: "center", 
                       fontSize: "20px", 
                       letterSpacing: "5px" 
@@ -232,7 +225,7 @@ function ForgotPassword() {
 
               <VuiBox mb={2}>
                 <VuiBox mb={1} ml={0.5}>
-                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: "#1a202c" }}>
+                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: darkMode ? "white" : "#1a202c" }}>
                     New Password
                   </VuiTypography>
                 </VuiBox>
@@ -250,7 +243,7 @@ function ForgotPassword() {
                       onChange={(e) => setNewPassword(e.target.value)}
                       inputProps={{ required: false }}
                       sx={{ 
-                        background: "#ffffff",
+                        background: darkMode ? "rgb(19, 21, 54)" : "#ffffff",
                         paddingRight: "40px"
                       }}
                     />
@@ -263,9 +256,9 @@ function ForgotPassword() {
                       onClick={() => setShowNewPassword(!showNewPassword)}
                     >
                       {showNewPassword ? (
-                        <IoEyeOffOutline size="20px" color="#1a202c" />
+                        <IoEyeOffOutline size="20px" color={darkMode ? "white" : "#1a202c"} />
                       ) : (
-                        <IoEyeOutline size="20px" color="#1a202c" />
+                        <IoEyeOutline size="20px" color={darkMode ? "white" : "#1a202c"} />
                       )}
                     </VuiBox>
                   </VuiBox>
@@ -274,7 +267,7 @@ function ForgotPassword() {
 
               <VuiBox mb={2}>
                 <VuiBox mb={1} ml={0.5}>
-                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: "#1a202c" }}>
+                  <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: darkMode ? "white" : "#1a202c" }}>
                     Confirm Password
                   </VuiTypography>
                 </VuiBox>
@@ -292,7 +285,7 @@ function ForgotPassword() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       inputProps={{ required: false }}
                       sx={{ 
-                        background: "#ffffff",
+                        background: darkMode ? "rgb(19, 21, 54)" : "#ffffff",
                         paddingRight: "40px"
                       }}
                     />
@@ -305,9 +298,9 @@ function ForgotPassword() {
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     >
                       {showConfirmPassword ? (
-                        <IoEyeOffOutline size="20px" color="#1a202c" />
+                        <IoEyeOffOutline size="20px" color={darkMode ? "white" : "#1a202c"} />
                       ) : (
-                        <IoEyeOutline size="20px" color="#1a202c" />
+                        <IoEyeOutline size="20px" color={darkMode ? "white" : "#1a202c"} />
                       )}
                     </VuiBox>
                   </VuiBox>
@@ -315,10 +308,10 @@ function ForgotPassword() {
               </VuiBox>
 
               <VuiBox mb={2}>
-                <VuiTypography variant="caption" sx={{ color: "#4a5568" }}>
+                <VuiTypography variant="caption" sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}>
                   Password must contain:
                 </VuiTypography>
-                <VuiTypography variant="caption" component="ul" sx={{ pl: 2, mt: 0.5, color: "#4a5568" }}>
+                <VuiTypography variant="caption" component="ul" sx={{ pl: 2, mt: 0.5, color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}>
                   <li>At least 8 characters</li>
                   <li>One uppercase letter</li>
                   <li>One lowercase letter</li>
@@ -334,7 +327,7 @@ function ForgotPassword() {
                 <VuiTypography
                   variant="button"
                   fontWeight="medium"
-                  sx={{ cursor: "pointer", color: "#1a202c" }}
+                  sx={{ cursor: "pointer", color: darkMode ? "white" : "#1a202c" }}
                   onClick={() => setStep(1)}
                 >
                   ← Back to email
@@ -357,15 +350,17 @@ function ForgotPassword() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+        background: darkMode 
+          ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
+          : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
       }}
     >
       <VuiBox sx={{ maxWidth: "450px", width: "100%", px: 3 }}>
         <VuiBox mb={3}>
-          <VuiTypography variant="h1" fontWeight="bold" textAlign="center" sx={{ fontSize: "1.875rem", color: "#1a202c" }}>
+          <VuiTypography variant="h1" fontWeight="bold" textAlign="center" sx={{ fontSize: "1.875rem", color: darkMode ? "white" : "#1a202c" }}>
             Forgot Password? 🔐
           </VuiTypography>
-          <VuiTypography variant="body2" textAlign="center" mt={1} sx={{ color: "#4a5568" }}>
+          <VuiTypography variant="body2" textAlign="center" mt={1} sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}>
             Enter your email and we'll send you a reset code
           </VuiTypography>
         </VuiBox>
@@ -377,7 +372,7 @@ function ForgotPassword() {
             noValidate
             p={3}
             sx={{
-              background: "#ffffff",
+              background: darkMode ? "rgb(19, 21, 54)" : "#ffffff",
               borderRadius: "20px",
             }}
           >
@@ -399,7 +394,7 @@ function ForgotPassword() {
 
             <VuiBox mb={2}>
               <VuiBox mb={1} ml={0.5}>
-                <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: "#1a202c" }}>
+                <VuiTypography component="label" variant="button" fontWeight="medium" sx={{ color: darkMode ? "white" : "#1a202c" }}>
                   Email
                 </VuiTypography>
               </VuiBox>
@@ -415,7 +410,7 @@ function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   inputProps={{ required: false }}
-                  sx={{ background: "#ffffff" }}
+                  sx={{ background: darkMode ? "rgb(19, 21, 54)" : "#ffffff" }}
                 />
               </GradientBorder>
             </VuiBox>
