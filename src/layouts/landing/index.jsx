@@ -7,9 +7,12 @@ import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 import { authService } from "services/auth.service";
+import { useVisionUIController } from "context";
 
 function Landing() {
   const navigate = useNavigate();
+  const [controller] = useVisionUIController();
+  const { darkMode } = controller;
 
   // Redirect authenticated users to dashboard
   useEffect(() => {
@@ -56,7 +59,9 @@ function Landing() {
       <VuiBox
         sx={{
           minHeight: "100vh",
-          background: "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)",
+          background: darkMode 
+            ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
+            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
           position: "relative",
           overflow: "hidden",
       }}
@@ -69,12 +74,18 @@ function Landing() {
           left: 0,
           right: 0,
           bottom: 0,
-          opacity: 0.05,
-          background: `
-            radial-gradient(circle at 20% 50%, #667eea 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
-            radial-gradient(circle at 40% 20%, #f093fb 0%, transparent 50%)
-          `,
+          opacity: darkMode ? 0.05 : 0.3,
+          background: darkMode 
+            ? `
+              radial-gradient(circle at 20% 50%, #667eea 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 50%),
+              radial-gradient(circle at 40% 20%, #f093fb 0%, transparent 50%)
+            `
+            : `
+              radial-gradient(circle at 20% 50%, #667eea 0%, transparent 70%),
+              radial-gradient(circle at 80% 80%, #764ba2 0%, transparent 70%),
+              radial-gradient(circle at 40% 20%, #f093fb 0%, transparent 70%)
+            `,
         }}
       />
 
@@ -112,15 +123,12 @@ function Landing() {
         {/* Main Headline */}
         <VuiTypography
           variant="h1"
-          color="white"
           fontWeight="bold"
           sx={{
             fontSize: { xs: "2.5rem", sm: "3.5rem", md: "5rem" },
             mb: 3,
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
+            color: darkMode ? "white" : "#1a202c",
+            textShadow: darkMode ? "none" : "0 2px 10px rgba(0, 0, 0, 0.1)",
           }}
         >
           Code. Compete. Conquer.
@@ -129,12 +137,12 @@ function Landing() {
         {/* Subheadline */}
         <VuiTypography
           variant="h5"
-          color="text"
           sx={{
             mb: 5,
             maxWidth: "700px",
             fontSize: { xs: "1rem", md: "1.3rem" },
             lineHeight: 1.6,
+            color: darkMode ? "rgba(255, 255, 255, 0.8)" : "#4a5568",
           }}
         >
           Master coding through real-time battles with developers worldwide.
@@ -220,8 +228,10 @@ function Landing() {
               </VuiTypography>
               <VuiTypography
                 variant="caption"
-                color="text"
-                sx={{ fontSize: { xs: "0.8rem", md: "0.9rem" } }}
+                sx={{ 
+                  fontSize: { xs: "0.8rem", md: "0.9rem" },
+                  color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568",
+                }}
               >
                 {stat.label}
               </VuiTypography>
@@ -243,7 +253,10 @@ function Landing() {
             },
           }}
         >
-          <VuiTypography variant="caption" color="text">
+          <VuiTypography 
+            variant="caption" 
+            sx={{ color: darkMode ? "rgba(255, 255, 255, 0.6)" : "#718096" }}
+          >
             Scroll to explore
           </VuiTypography>
         </VuiBox>
@@ -265,17 +278,26 @@ function Landing() {
       >
         <VuiTypography
           variant="h2"
-          color="white"
           fontWeight="bold"
-          sx={{ mb: 2, fontSize: { xs: "2rem", md: "3rem" }, textAlign: "center" }}
+          sx={{ 
+            mb: 2, 
+            fontSize: { xs: "2rem", md: "3rem" }, 
+            textAlign: "center",
+            color: darkMode ? "white" : "#1a202c",
+          }}
         >
           Why ByteBattle?
         </VuiTypography>
 
         <VuiTypography
           variant="body1"
-          color="text"
-          sx={{ mb: 8, maxWidth: "600px", textAlign: "center", fontSize: "1.1rem" }}
+          sx={{ 
+            mb: 8, 
+            maxWidth: "600px", 
+            textAlign: "center", 
+            fontSize: "1.1rem",
+            color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568",
+          }}
         >
           Everything you need to level up your coding skills through competitive programming
         </VuiTypography>
@@ -294,25 +316,36 @@ function Landing() {
             <VuiBox
               key={index}
               sx={{
-                background: "rgba(255, 255, 255, 0.05)",
+                background: darkMode 
+                  ? "rgba(255, 255, 255, 0.05)" 
+                  : "rgba(255, 255, 255, 0.8)",
                 backdropFilter: "blur(10px)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                border: darkMode 
+                  ? "1px solid rgba(255, 255, 255, 0.1)" 
+                  : "1px solid rgba(203, 213, 225, 0.5)",
                 borderRadius: "16px",
                 p: 4,
                 transition: "all 0.3s ease",
                 "&:hover": {
                   transform: "translateY(-8px)",
-                  background: "rgba(255, 255, 255, 0.08)",
-                  borderColor: "rgba(102, 126, 234, 0.5)",
-                  boxShadow: "0 12px 32px rgba(102, 126, 234, 0.2)",
+                  background: darkMode 
+                    ? "rgba(255, 255, 255, 0.08)" 
+                    : "rgba(255, 255, 255, 0.95)",
+                  borderColor: darkMode ? "rgba(255, 255, 255, 0.5)" : "rgba(102, 126, 234, 0.5)",
+                  boxShadow: darkMode 
+                    ? "0 12px 32px rgba(102, 126, 234, 0.2)" 
+                    : "0 12px 32px rgba(102, 126, 234, 0.15)",
                 },
               }}
             >
-              <VuiBox sx={{ color: "#667eea", mb: 2 }}>{feature.icon}</VuiBox>
-              <VuiTypography variant="h5" color="white" fontWeight="bold" sx={{ mb: 1 }}>
+              <VuiBox sx={{ color: darkMode ? "#667eea" : "#667eea", mb: 2 }}>{feature.icon}</VuiBox>
+              <VuiTypography variant="h5" fontWeight="bold" sx={{ mb: 1, color: darkMode ? "white" : "#1a202c" }}>
                 {feature.title}
               </VuiTypography>
-              <VuiTypography variant="body2" color="text">
+              <VuiTypography 
+                variant="body2" 
+                sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}
+              >
                 {feature.description}
               </VuiTypography>
             </VuiBox>
@@ -336,17 +369,21 @@ function Landing() {
       >
         <VuiTypography
           variant="h2"
-          color="white"
           fontWeight="bold"
-          sx={{ mb: 2, fontSize: { xs: "2rem", md: "3rem" }, textAlign: "center" }}
+          sx={{ mb: 2, fontSize: { xs: "2rem", md: "3rem" }, textAlign: "center", color: darkMode ? "white" : "#1a202c" }}
         >
           How It Works
         </VuiTypography>
 
         <VuiTypography
           variant="body1"
-          color="text"
-          sx={{ mb: 8, maxWidth: "600px", textAlign: "center", fontSize: "1.1rem" }}
+          sx={{ 
+            mb: 8, 
+            maxWidth: "600px", 
+            textAlign: "center", 
+            fontSize: "1.1rem",
+            color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568",
+          }}
         >
           Get started in minutes and begin your coding journey
         </VuiTypography>
@@ -392,10 +429,13 @@ function Landing() {
               >
                 {item.step}
               </VuiBox>
-              <VuiTypography variant="h5" color="white" fontWeight="bold" sx={{ mb: 1 }}>
+              <VuiTypography variant="h5" fontWeight="bold" sx={{ mb: 1, color: darkMode ? "white" : "#1a202c" }}>
                 {item.title}
               </VuiTypography>
-              <VuiTypography variant="body2" color="text">
+              <VuiTypography 
+                variant="body2" 
+                sx={{ color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568" }}
+              >
                 {item.desc}
               </VuiTypography>
             </VuiBox>
@@ -420,17 +460,20 @@ function Landing() {
       >
         <VuiTypography
           variant="h2"
-          color="white"
           fontWeight="bold"
-          sx={{ mb: 3, fontSize: { xs: "2rem", md: "3rem" } }}
+          sx={{ mb: 3, fontSize: { xs: "2rem", md: "3rem" }, color: darkMode ? "white" : "#1a202c" }}
         >
           Ready to Start Your Coding Journey?
         </VuiTypography>
 
         <VuiTypography
           variant="body1"
-          color="text"
-          sx={{ mb: 5, maxWidth: "600px", fontSize: "1.1rem" }}
+          sx={{ 
+            mb: 5, 
+            maxWidth: "600px", 
+            fontSize: "1.1rem",
+            color: darkMode ? "rgba(255, 255, 255, 0.7)" : "#4a5568",
+          }}
         >
           Join thousands of developers improving their skills through competitive programming
         </VuiTypography>
@@ -459,7 +502,9 @@ function Landing() {
       {/* Footer */}
       <VuiBox
         sx={{
-          borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+          borderTop: darkMode 
+            ? "1px solid rgba(255, 255, 255, 0.1)" 
+            : "1px solid rgba(203, 213, 225, 0.3)",
           py: 4,
           px: 3,
           textAlign: "center",
@@ -467,7 +512,10 @@ function Landing() {
           zIndex: 1,
         }}
       >
-        <VuiTypography variant="body2" color="text">
+        <VuiTypography 
+          variant="body2" 
+          sx={{ color: darkMode ? "rgba(255, 255, 255, 0.6)" : "#718096" }}
+        >
           © 2026 ByteBattle. All rights reserved.
         </VuiTypography>
       </VuiBox>
