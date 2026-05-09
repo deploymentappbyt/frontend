@@ -5,6 +5,7 @@ import VuiTypography from "components/VuiTypography";
 import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import GradientBorder from "examples/GradientBorder";
+import PageLayout from "examples/LayoutContainers/PageLayout";
 import { authService } from "../../../services/auth.service";
 import { IoArrowBack, IoCheckmarkCircle, IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 
@@ -102,19 +103,20 @@ function ForgotPassword() {
   // Step 3: Success screen
   if (step === 3) {
     return (
-      <VuiBox
-        component="main"
-        role="main"
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: darkMode 
-            ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
-            : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
-        }}
-      >
+      <PageLayout>
+        <VuiBox
+          component="main"
+          role="main"
+          sx={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: darkMode 
+              ? "radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%)"
+              : "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+          }}
+        >
         <VuiBox sx={{ maxWidth: "450px", width: "100%", px: 3 }}>
           <GradientBorder borderRadius="20px" minHeight="auto">
             <VuiBox
@@ -138,12 +140,14 @@ function ForgotPassword() {
           </GradientBorder>
         </VuiBox>
       </VuiBox>
+      </PageLayout>
     );
   }
 
   // Step 2: Enter reset code and new password
   if (step === 2) {
     return (
+      <PageLayout>
       <VuiBox
         component="main"
         role="main"
@@ -337,15 +341,17 @@ function ForgotPassword() {
           </GradientBorder>
         </VuiBox>
       </VuiBox>
+      </PageLayout>
     );
   }
 
   // Step 1: Enter email
   return (
-    <VuiBox
-      component="main"
-      role="main"
-      sx={{
+    <PageLayout>
+      <VuiBox
+        component="main"
+        role="main"
+        sx={{
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
@@ -443,6 +449,7 @@ function ForgotPassword() {
         </GradientBorder>
       </VuiBox>
     </VuiBox>
+    </PageLayout>
   );
 }
 
