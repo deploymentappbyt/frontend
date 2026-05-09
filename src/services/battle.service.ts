@@ -4,13 +4,14 @@ import axios from 'axios';
 
 class BattleService {
   private socket: Socket | null = null;
-  private battleServiceUrl = import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'; // Connect through API Gateway
+  // Connect directly to battle service instead of through API gateway
+  private battleServiceUrl = import.meta.env.VITE_BATTLE_SERVICE_URL || 'https://battle-service.onrender.com';
   private currentUserId: string | null = null;
   private currentUsername: string | null = null;
   private joinRoomInFlight = new Map<string, Promise<any>>();
   private joinPrivateInFlight = new Set<string>();
 
-  // Initialize socket connection to Battle Service (through API Gateway)
+  // Initialize socket connection to Battle Service (direct connection)
   initializeSocket(token?: string): Socket {
     if (this.socket) {
       if (!this.socket.connected) {
@@ -49,7 +50,7 @@ class BattleService {
 
     socket.on('connect_error', (error) => {
       console.error('🔴 Battle socket connection error:', error.message);
-      console.error('Make sure battle service is running on port 3010');
+      console.error('Make sure battle service is accessible at:', this.battleServiceUrl);
     });
 
     socket.on('reconnect_attempt', (attemptNumber) => {
@@ -451,7 +452,7 @@ class BattleService {
     return this.subscribe('battle:voice_mute_changed', callback);
   }
 
-  // HTTP API calls
+  // HTTP API calls (through API gateway)
   async getActiveBattles(): Promise<any> {
     const userId = this.getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
@@ -460,12 +461,7 @@ class BattleService {
       const response = await api.get(`/battles/active/${userId}`);
       return response.data;
     } catch (error: any) {
-      if (error?.response?.status === 404) {
-        const directResponse = await axios.get(
-          `${this.battleServiceUrl}/api/battles/active/${userId}`,
-        );
-        return directResponse.data;
-      }
+      console.error('Error getting active battles:', error);
       throw error;
     }
   }
@@ -478,12 +474,7 @@ class BattleService {
       const response = await api.get(`/battles/history/${userId}`);
       return response.data;
     } catch (error: any) {
-      if (error?.response?.status === 404) {
-        const directResponse = await axios.get(
-          `${this.battleServiceUrl}/api/battles/history/${userId}`,
-        );
-        return directResponse.data;
-      }
+      console.error('Error getting battle history:', error);
       throw error;
     }
   }
@@ -494,13 +485,7 @@ class BattleService {
       const response = await api.get(`/battles/team-league${query}`);
       return response.data;
     } catch (error: any) {
-      if (error?.response?.status === 404) {
-        const query = teamSize ? `?teamSize=${encodeURIComponent(teamSize)}` : '';
-        const directResponse = await axios.get(
-          `${this.battleServiceUrl}/api/battles/team-league${query}`,
-        );
-        return directResponse.data;
-      }
+      console.error('Error getting team league:', error);
       throw error;
     }
   }
@@ -510,12 +495,7 @@ class BattleService {
       const response = await api.get(`/battles/${battleId}`);
       return response.data;
     } catch (error: any) {
-      if (error?.response?.status === 404) {
-        const directResponse = await axios.get(
-          `${this.battleServiceUrl}/api/battles/${battleId}`,
-        );
-        return directResponse.data;
-      }
+      console.error('Error getting battle:', error);
       throw error;
     }
   }
