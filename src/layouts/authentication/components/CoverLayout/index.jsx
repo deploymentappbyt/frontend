@@ -91,27 +91,34 @@ function CoverLayout({
           alignItems="center"
           flexDirection="column"
         >
-          <VuiTypography
-            textAlign={cardContent ? "center" : "start"}
-            variant="subtitle1"
-            fontWeight="medium"
-            color="white"
-            mb="10px"
-            sx={{ mb: 1, letterSpacing: "8px" }}
+          <VuiBox
+            component="h6"
+            sx={{
+              textAlign: cardContent ? "center" : "start",
+              fontSize: "0.875rem",
+              fontWeight: 500,
+              marginBottom: "10px",
+              letterSpacing: "8px",
+              color: "#ffffff",
+              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+            }}
           >
             {premotto}
-          </VuiTypography>
-          <VuiTypography
-            textAlign={cardContent ? "center" : "start"}
-            variant="h2"
-            fontWeight="bold"
-            color="logo"
-            mb="10px"
-            textGradient
-            sx={{ letterSpacing: "8px" }}
+          </VuiBox>
+          <VuiBox
+            component="h2"
+            sx={{
+              textAlign: cardContent ? "center" : "start",
+              fontSize: "2.25rem",
+              fontWeight: 700,
+              marginBottom: "10px",
+              letterSpacing: "8px",
+              color: "#ffffff",
+              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+            }}
           >
             {motto}
-          </VuiTypography>
+          </VuiBox>
         </VuiBox>
       </VuiBox>
       <VuiBox
