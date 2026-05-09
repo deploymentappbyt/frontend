@@ -20,20 +20,27 @@ class BattleService {
       return this.socket;
     }
 
-    // Get userId from localStorage to send during connection
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const userId = user._id || user.id || null;
+    // CRITICAL: Get userId BEFORE connecting to ensure it's sent in handshake
+    const userId = this.getCurrentUserId();
+    const username = this.getCurrentUsername();
 
     console.log('Initializing battle socket connection to:', `${this.battleServiceUrl}/battle`);
     console.log('  - User ID:', userId);
+    console.log('  - Username:', username);
+
+    if (!userId) {
+      console.error('❌ Cannot initialize socket without userId!');
+      throw new Error('User ID is required to connect to battle service');
+    }
 
     const socket = io(`${this.battleServiceUrl}/battle`, {
+      query: {
+        userId: userId, // ✅ Send userId in query for handleConnection
+        username: username,
+      },
       auth: {
         token: token || localStorage.getItem('accessToken'),
-        userId: userId, // Send userId during connection
-      },
-      query: {
-        userId: userId, // Also send in query as fallback
+        userId: userId, // Also send in auth as backup
       },
       transports: ['websocket', 'polling'],
       reconnection: true,
@@ -48,6 +55,7 @@ class BattleService {
       console.log('✅ Battle socket connected:', socket.id);
       console.log('  - Socket transport:', socket.io.engine.transport.name);
       console.log('  - User ID sent:', userId);
+      console.log('  - Username sent:', username);
     });
 
     socket.on('disconnect', (reason) => {
@@ -70,6 +78,7 @@ class BattleService {
     socket.on('reconnect', (attemptNumber) => {
       console.log(`✅ Reconnected after ${attemptNumber} attempts`);
       console.log('  - User ID:', userId);
+      console.log('  - Username:', username);
     });
 
     return socket;
@@ -79,20 +88,28 @@ class BattleService {
   setCurrentUser(userId: string, username: string) {
     this.currentUserId = userId;
     this.currentUsername = username;
+    
+    // If socket is already connected, update the server with userId
+    if (this.socket && this.socket.connected) {
+      console.log('🔄 Updating server with userId:', userId);
+      this.socket.emit('battle:register_user', { userId, username });
+    }
   }
 
   getCurrentUserId(): string | null {
     if (this.currentUserId) return this.currentUserId;
     
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user._id || user.id || null;
+    this.currentUserId = user._id || user.id || null;
+    return this.currentUserId;
   }
 
   getCurrentUsername(): string | null {
     if (this.currentUsername) return this.currentUsername;
     
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-    return user.username || user.email || null;
+    this.currentUsername = user.username || user.email || null;
+    return this.currentUsername;
   }
 
   private emitVoiceEvent<T extends object>(eventName: string, payload: T) {
