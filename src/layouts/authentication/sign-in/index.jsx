@@ -379,11 +379,21 @@ function SignIn() {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-jmhn.onrender.com'}/auth/google`;
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) {
+      setError('API URL is not configured. Please contact support.');
+      return;
+    }
+    window.location.href = `${apiUrl}/auth/google`;
   };
 
   const handleGithubLogin = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-jmhn.onrender.com'}/auth/github`;
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) {
+      setError('API URL is not configured. Please contact support.');
+      return;
+    }
+    window.location.href = `${apiUrl}/auth/github`;
   };
 
   return (

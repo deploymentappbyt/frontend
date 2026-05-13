@@ -5,9 +5,15 @@ import axios from 'axios';
 class BattleService {
   private socket: Socket | null = null;
   // Connect directly to battle service instead of through API gateway
-  private battleServiceUrl = import.meta.env.VITE_BATTLE_SERVICE_URL || 'https://battle-service-3uq5.onrender.com';
+  private battleServiceUrl = import.meta.env.VITE_BATTLE_SERVICE_URL;
   private currentUserId: string | null = null;
   private currentUsername: string | null = null;
+
+  constructor() {
+    if (!this.battleServiceUrl) {
+      throw new Error('VITE_BATTLE_SERVICE_URL environment variable is required');
+    }
+  }
   private joinRoomInFlight = new Map<string, Promise<any>>();
   private joinPrivateInFlight = new Set<string>();
 

@@ -1,6 +1,10 @@
 import { io, Socket } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'https://api-gateway-jmhn.onrender.com';
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+
+if (!SOCKET_URL) {
+  throw new Error('VITE_SOCKET_URL environment variable is required');
+}
 
 let socket: Socket | null = null;
 

@@ -1,7 +1,11 @@
 import { io, Socket } from 'socket.io-client';
 import api from './api.js';
 
-const CHAT_SOCKET_URL = import.meta.env.VITE_CHAT_SOCKET_URL || 'https://api-gateway-jmhn.onrender.com';
+const CHAT_SOCKET_URL = import.meta.env.VITE_CHAT_SOCKET_URL;
+
+if (!CHAT_SOCKET_URL) {
+  throw new Error('VITE_CHAT_SOCKET_URL environment variable is required');
+}
 
 class ChatService {
   private socket: Socket | null = null;
