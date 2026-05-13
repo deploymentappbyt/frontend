@@ -31,7 +31,7 @@ export class VoiceChatService {
    * PHASE 1: Initialize signaling connection
    */
   async connect(): Promise<void> {
-    const apiUrl = import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com';
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://api-gateway-jmhn.onrender.com';
     
     this.socket = io(`${apiUrl}/voice`, {
       transports: ['websocket'],

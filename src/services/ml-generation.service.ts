@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // ML Generation API client - separate from main API
 const mlApiClient = axios.create({
-  baseURL: import.meta.env.VITE_ML_API_URL || 'https://api-gateway-j03l.onrender.com',
+  baseURL: import.meta.env.VITE_ML_API_URL || 'https://api-gateway-jmhn.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },

@@ -140,11 +140,11 @@ function SignUp() {
   // ============================================================================
 
   const handleGoogleSignUp = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/google`;
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-jmhn.onrender.com'}/auth/google`;
   };
 
   const handleGithubSignUp = () => {
-    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-j03l.onrender.com'}/auth/github`;
+    window.location.href = `${import.meta.env.VITE_API_URL || 'https://api-gateway-jmhn.onrender.com'}/auth/github`;
   };
 
   return (

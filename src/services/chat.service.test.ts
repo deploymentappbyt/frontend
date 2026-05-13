@@ -3,14 +3,14 @@ import { describe, it, expect } from 'vitest';
 describe('Chat Service Types and Constants', () => {
   describe('Chat socket constants', () => {
     it('validates chat socket URL configuration', () => {
-      const CHAT_SOCKET_URL = 'https://api-gateway-j03l.onrender.com';
+      const CHAT_SOCKET_URL = 'https://api-gateway-jmhn.onrender.com';
 
       expect(CHAT_SOCKET_URL).toContain('api-gateway');
       expect(CHAT_SOCKET_URL).toContain('https');
     });
 
     it('validates fallback chat socket URL', () => {
-      const defaultURL = 'https://api-gateway-j03l.onrender.com';
+      const defaultURL = 'https://api-gateway-jmhn.onrender.com';
       const envURL = process.env.VITE_CHAT_SOCKET_URL || defaultURL;
 
       expect(envURL).toBeTruthy();

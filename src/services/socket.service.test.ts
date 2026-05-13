@@ -115,7 +115,7 @@ describe('Socket service types', () => {
       };
 
       const options: SocketConnectOptions = {
-        url: 'https://api-gateway-j03l.onrender.com',
+        url: 'https://api-gateway-jmhn.onrender.com',
         reconnection: true,
         reconnectionDelay: 1000,
         reconnectionDelayMax: 5000,
