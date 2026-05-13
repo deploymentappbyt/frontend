@@ -1,23 +1,22 @@
 import { io, Socket } from 'socket.io-client';
 import api from './api.js';
-import axios from 'axios';
 
 class BattleService {
   private socket: Socket | null = null;
-  // Connect directly to battle service instead of through API gateway
-  private battleServiceUrl = import.meta.env.VITE_BATTLE_SERVICE_URL;
+  // Use API Gateway socket URL (same as main socket connection)
+  private socketUrl = import.meta.env.VITE_SOCKET_URL;
   private currentUserId: string | null = null;
   private currentUsername: string | null = null;
 
   constructor() {
-    if (!this.battleServiceUrl) {
-      throw new Error('VITE_BATTLE_SERVICE_URL environment variable is required');
+    if (!this.socketUrl) {
+      throw new Error('VITE_SOCKET_URL environment variable is required');
     }
   }
   private joinRoomInFlight = new Map<string, Promise<any>>();
   private joinPrivateInFlight = new Set<string>();
 
-  // Initialize socket connection to Battle Service (direct connection)
+  // Initialize socket connection to Battle Service (through API Gateway)
   initializeSocket(token?: string): Socket {
     if (this.socket) {
       if (!this.socket.connected) {
@@ -30,7 +29,7 @@ class BattleService {
     const userId = this.getCurrentUserId();
     const username = this.getCurrentUsername();
 
-    console.log('Initializing battle socket connection to:', `${this.battleServiceUrl}/battle`);
+    console.log('Initializing battle socket connection to:', `${this.socketUrl}/battle`);
     console.log('  - User ID:', userId);
     console.log('  - Username:', username);
 
@@ -39,7 +38,7 @@ class BattleService {
       throw new Error('User ID is required to connect to battle service');
     }
 
-    const socket = io(`${this.battleServiceUrl}/battle`, {
+    const socket = io(`${this.socketUrl}/battle`, {
       query: {
         userId: userId, // ✅ Send userId in query for handleConnection
         username: username,
@@ -74,7 +73,7 @@ class BattleService {
 
     socket.on('connect_error', (error) => {
       console.error('🔴 Battle socket connection error:', error.message);
-      console.error('Make sure battle service is accessible at:', this.battleServiceUrl);
+      console.error('Make sure API Gateway is accessible at:', this.socketUrl);
     });
 
     socket.on('reconnect_attempt', (attemptNumber) => {
