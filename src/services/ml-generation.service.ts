@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// ML Generation API client - separate from main API
-const apiUrl = import.meta.env.VITE_ML_API_URL;
+// ML Generation API client - goes through API Gateway
+const apiUrl = import.meta.env.VITE_API_URL;
 if (!apiUrl) {
-  throw new Error('VITE_ML_API_URL environment variable is required');
+  throw new Error('VITE_API_URL environment variable is required');
 }
 
 const mlApiClient = axios.create({
